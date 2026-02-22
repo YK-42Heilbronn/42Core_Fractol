@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:27:11 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/22 10:14:32 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:10:56 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,9 @@
 # define WIDTH 1024
 # define HEIGHT 768
 
-typedef struct s_complex {
-	double real;
-	double imaginary;
-} t_complex;
-
-typedef struct s_transform_axis {
-	double pixel_axis_limits[2];
-	double pattern_axis_limits[2];
-} t_transform_axis;
-
-typedef struct s_transform_plane {
-	t_transform_axis x;
-	t_transform_axis y;
-} t_transform_plane;
-
+// ===============
+// Colors
+// ===============
 typedef struct s_color {
 	int red;
 	int green;
@@ -47,52 +35,86 @@ typedef struct s_color {
 	int alpha;
 } t_color;
 
-typedef struct s_psychedelic_palette {
+// psychedelic colors
+typedef struct s_palette {
 	t_color color1;
 	t_color color2;
 	t_color color3;
 	t_color color4;
 	t_color color5;
-} t_psychedelic_palette;
+} t_palette;
 
+// ===============
+// Complex Number
+// ===============
+typedef struct s_complex {
+	double real;
+	double imaginary;
+} t_complex;
+
+// ================
+// Coordinate System & Their Elements
+// ================
+typedef struct s_axis {
+	double min;
+	double max;
+} t_axis;
+
+typedef struct s_point {
+	double x;
+	double y;
+} t_point;
+
+typedef struct s_plane {
+	t_axis a_x;
+	t_axis a_y;
+	t_point pt;
+	t_point offset;
+	t_point cursor;
+} t_plane;
+
+// ===============
+// Fractols
+// ===============
 typedef struct s_set_params {
-	mlx_image_t *img;
-	mlx_t *mlx;
 	t_complex z;
 	t_complex c;
-	t_transform_plane plane_params;
-	t_psychedelic_palette c_palette;
-	double img_offset_x[2];
-	double img_offset_y[2];
-	double cursor_x;
-	double cursor_y;
+	t_plane image;
+	t_palette colors;
 	int threshold;
-	int max_iterations;
+	int iter;
+	int max_iters;
+	char *set;
+	double *extras;
 } t_set_params;
 
 typedef struct s_fractol {
 	mlx_image_t *img;
 	mlx_t *mlx;
-	double img_offset_x[2];
-	double img_offset_y[2];
-	double img_cursor_x;
-	double img_cursor_y;
-	t_set_params *set_params;
+	t_plane window;
+	t_set_params s_params;
 } t_fractol;
 
+// ===============
+// Functions
+// ===============
+// fractol.c
+void initialize_fractol(t_fractol *fractol);
+
 // colors
-void initialize_color_palette_1(t_psychedelic_palette *c_palette);
-void initialize_color_palette_2(t_psychedelic_palette *c_palette);
+void initialize_color_palette_1(t_palette *c_palette);
+void initialize_color_palette_2(t_palette *c_palette);
 int get_rgba(int r, int g, int b, int a);
-int get_pixel_color(t_set_params *set_params, int iteration);
+int	get_pixel_color(t_set_params *set_params);
 uint32_t	get_vibrant_rgba(int gradient_value);
 
 // complex
-double modulus_of_complex_number(t_complex *imag_num);
-void square_of_complex_number(t_complex *imag_num);
+double mod_cmplx_num(t_complex *num);
+void squr_cmplx_num(t_complex *num);
 
 // view_controls
-// hooks.c
+// data.c
+void update_image_axes_range(t_set_params *set_params);
 void reset_offset_values(t_set_params *set_params);
 void my_scrollhook(double xdelta, double ydelta, void* param);
 void my_closehook(void *mlx);
@@ -100,22 +122,25 @@ void my_resizehook(int32_t width, int32_t height, void *param);
 void my_keyhook(mlx_key_data_t keydata, void *param);
 void my_cursorhook(double xpos, double ypos, void* param);
 
-// transformation.c
-double normalize_value(double value, double *axis_limits, int max);
-double min_max_diff(double *axis_limits[2]);
-double transform_pixels_to_pattern_coordinates(double pixel_value, t_transform_axis *axis_params);
-
 // sets
 // mandelbrot
-void reset_z(t_set_params *set_params);
-void update_z(t_set_params *set_params);
-void update_pattern_coordinates_limites(t_set_params *set_params);
-void mandelbrot(t_set_params *set_params);
+void mandelbrot(t_fractol *frctl);
 
 // julia
-void julia(t_set_params *set_params, double ca, double cb);
+void julia(t_fractol *frctl);
+
+// routines.c
+void point_escaped_iteration_in_complex_plane(t_fractol *frctl);
+void reset_z(t_set_params *set_params);
+void update_z(t_set_params *set_params);
+
+// coordinates_ops.c
+double normalize_value(double crdnt_vlu, t_axis *ax, int max);
+double min_max_diff(t_axis *ax);
+double	transform_sys1_to_sys2(double crdnt_vlu, t_axis *sys1_ax, t_axis *sys2_ax);
 
 // utils
+// strtodouble.c
 long	double	ft_strtod(char *str);
 
 #endif

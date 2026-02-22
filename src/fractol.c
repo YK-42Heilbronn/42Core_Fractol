@@ -6,42 +6,39 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 07:37:15 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/22 10:02:02 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/22 15:39:02 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void initialize_complex(t_set_params *params)
+void initialize_fractol(t_fractol *frctl)
 {
-	params->z.real = 0.0;
-	params->z.imaginary = 0.0;
-
-	// initialize x_axis of pixel and pattern
-	params->plane_params.x.pixel_axis_limits[0] = 0;
-	params->plane_params.x.pixel_axis_limits[1] = WIDTH;
-	// params->plane_params.x.pattern_axis_limits[0] = -2.0;
-	// params->plane_params.x.pattern_axis_limits[1] = 1.0;
-	params->plane_params.x.pattern_axis_limits[0] = -2.5;
-	params->plane_params.x.pattern_axis_limits[1] = 2.5;
-	// initialize y_axis of pixel and pattern
-	params->plane_params.y.pixel_axis_limits[0] = 0;
-	params->plane_params.y.pixel_axis_limits[1] = HEIGHT;
-	// params->plane_params.y.pattern_axis_limits[0] = -1.5;
-	// params->plane_params.y.pattern_axis_limits[1] = 1.5;
-	params->plane_params.y.pattern_axis_limits[1] = 1.5;
-	params->plane_params.y.pattern_axis_limits[0] = -1.5;
-
-	params->img_offset_x[0] = 0.0;
-	params->img_offset_x[1] = 0.0;
-	params->img_offset_y[0] = 0.0;
-	params->img_offset_y[1] = 0.0;
-	params->threshold = 16;
-	params->max_iterations = 100;
-
+	// Set Params
+	frctl->s_params.z.real = 0.0;
+	frctl->s_params.z.imaginary = 0.0;
+	// Scene
+	frctl->s_params.image.a_x.min = -2.5;
+	frctl->s_params.image.a_x.max = 2.5;
+	frctl->s_params.image.a_y.min = -1.5;
+	frctl->s_params.image.a_y.max = 1.5;
+	// Others
+	frctl->s_params.threshold = 16;
+	frctl->s_params.iter = 0;
+	frctl->s_params.max_iters = 100;
 	// color palette
-	// initialize_color_palette_1(&(params->c_palette));
-	initialize_color_palette_2(&(params->c_palette));
+	// initialize_color_palette_1(&(frctl->s_params.c_palette));
+
+	// Window
+	frctl->window.a_x.min = 0;
+	frctl->window.a_x.max = WIDTH;
+	frctl->window.a_y.min = 0;
+	frctl->window.a_y.max = HEIGHT;
+	if (frctl->s_params.set[0] == '2')
+		frctl->s_params.extras = (double *)malloc(sizeof(double) * \
+										(frctl->s_params.set[0]-'0'));
+	else
+		frctl->s_params.extras = NULL;
 }
 
 //-0.5125 + 0.5213i
@@ -56,59 +53,57 @@ void print_usage()
 	exit(-1);
 }
 
-int	main(int argc, char *argv[])
+void put_set(t_fractol *frctl)
+{
+	if (frctl->s_params.set[0] == '1')
+		mandelbrot(frctl);
+	else if (frctl->s_params.set[1] == '2')
+		julia(frctl);
+	else
+		mandelbrot(frctl);
+}
+
+void	validate_argvs(int argc, char *argv[], t_fractol *frctl)
 {
 	if (argc <= 1)
 		print_usage();
 	else
 	{
-		mlx_t *mlx;
-		mlx_image_t *img;
-		t_set_params set_params;
-		int32_t *w;
-		int32_t *h;
-		char *set;
-
-		mlx = mlx_init(WIDTH, HEIGHT, "", true);
-		img = mlx_new_image(mlx, WIDTH, HEIGHT);
-
-		// position window to center
-		w = NULL;
-		h = NULL;
-		// mlx_get_monitor_size(0, w, h);
-		// printf("%d - %d\n", *w, *h);
-		// if (w != NULL && h != NULL)
-		// 	mlx_set_window_pos(mlx, *w/4, *h/4);
-
-		// mandelbrot
-		initialize_complex(&set_params);
-		set_params.img = img;
-		set_params.mlx = mlx;
 		if (argv[1][0] == '1' && argc == 2)
-		{
-			set = "Mandelbrot";
-			mandelbrot(&set_params);
-		}
+			frctl->s_params.set = "1-Mandelbrot";
 		else if (argv[1][0] == '2' && argc == 4)
 		{
-			set = "Julia";
-			julia(&set_params, ft_strtod(argv[2]), ft_strtod(argv[3]));
+			frctl->s_params.set = "2-Julia";
+			frctl->s_params.extras[0] = ft_strtod(argv[2]);
+			frctl->s_params.extras[1] = ft_strtod(argv[3]);
 		}
 		else
-		{
-			mlx_delete_image(mlx, img);
-			mlx_close_window(mlx);
 			print_usage();
-		}
-		mlx_image_to_window(mlx, img, 0, 0);
-		mlx_set_window_title(mlx, set);
-		mlx_scroll_hook(mlx, &my_scrollhook, &set_params);
-		// mlx_close_hook(mlx, my_closehook, mlx);
-		mlx_resize_hook(mlx, my_resizehook, &set_params);
-		mlx_key_hook(mlx, my_keyhook, &set_params);
-		// mlx_cursor_hook(mlx, my_cursorhook, &set_params);
-		mlx_loop(mlx);
-		// mlx_terminate(mlx);
 	}
+}
+
+int	main(int argc, char *argv[])
+{
+	mlx_t *mlx;
+	mlx_image_t *img;
+	t_fractol frctl;
+
+	validate_argvs(argc, argv, &frctl);
+	mlx = mlx_init(WIDTH, HEIGHT, "", true);
+	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	initialize_fractol(&frctl);
+	frctl.img = img;
+	frctl.mlx = mlx;
+	mlx_image_to_window(mlx, img, 0, 0);
+	put_set(&frctl);
+	mlx_set_window_title(mlx, frctl.s_params.set);
+	mlx_scroll_hook(mlx, &my_scrollhook, &set_params);
+	// mlx_close_hook(mlx, my_closehook, mlx);
+	mlx_resize_hook(mlx, my_resizehook, &set_params);
+	mlx_key_hook(mlx, my_keyhook, &set_params);
+	// mlx_cursor_hook(mlx, my_cursorhook, &set_params);
+	mlx_loop(mlx);
+	// mlx_terminate(mlx);
+
 	return(0);
 }
