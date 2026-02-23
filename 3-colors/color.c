@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:37:30 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 17:50:15 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 18:29:59 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ color = log(mod_cmplx_num(&(s_params->z)) / pow(2,
 uint32_t	get_continuous_coloring(t_set_params *s_params)
 {
 	int	color;
-	int num;
+	int	num;
 
 	num = log(log(mod_cmplx_num(&(s_params->z))));
 	color = s_params->iter + 1 - (num / log(2));
-	color = (color*255)/s_params->max_iters;
+	color = (color * 255) / s_params->max_iters;
 	return (get_rgba((color * 2) % 255, 0, (color * 4) % 255, 221));
 }

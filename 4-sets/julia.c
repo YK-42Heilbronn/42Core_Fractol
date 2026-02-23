@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:36:17 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 16:59:12 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 18:27:49 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	draw(t_fractol *frctl)
 					);
 			point_escaped_iteration_in_complex_plane(frctl);
 			mlx_put_pixel(frctl->img, frctl->window.pt.x, frctl->window.pt.y,
-				get_continuous_coloring(&(frctl->s_params))); // get_color_gradient(
+				get_continuous_coloring(&(frctl->s_params)));
 			frctl->window.pt.y++;
 			reset_z(&(frctl->s_params.z));
 		}
