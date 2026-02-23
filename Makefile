@@ -60,4 +60,8 @@ fclean: clean
 	@rm -rf $(MLX_LIB)/build
 	@make -C $(LIBFT_DIR) fclean
 
-.PHONY: re clean fclean all test
+git-mlx:
+	@cd $(LIBS) && git clone https://github.com/codam-coding-college/MLX42.git
+	@cd ../
+
+.PHONY: re clean fclean all test git-mlx

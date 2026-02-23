@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 07:37:15 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 15:41:51 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 18:03:50 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_usage(void)
   e.g: ./fractol 2\n\
   e.g: ./fractol 2 -0.5125 0.5213\n";
 	write(1, print, ft_strlen(print));
-	exit(-1);
+	exit(1);
 }
 
 void	display_set(t_fractol *frctl)
@@ -103,5 +103,6 @@ int	main(int argc, char *argv[])
 	mlx_key_hook(mlx, &inputs_events, &frctl);
 	mlx_close_hook(mlx, &close_program, mlx);
 	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	return (0);
 }
