@@ -16,10 +16,11 @@ MLX_LIB=$(LIBS)/MLX42
 MLX42=$(MLX_LIB)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRC_HEADER=fractol.h
 # TEST_SRC_HEADER=test_fractol.h
-SRCS=colors/color.c \
-	view_controls/hooks.c view_controls/transformation.c\
-	complex/complex.c \
-	sets/mandelbrot.c sets/julia.c \
+SRCS=1-coordinates/coordinates.c 1-coordinates/ops.c \
+	2-complex_number/complex.c \
+	3-colors/color.c \
+	view_controls/data.c view_controls/move.c view_controls/zoom.c\
+	sets/mandelbrot.c sets/julia.c sets/routines.c \
 	utils/strtodouble.c \
 	fractol.c
 # TEST_SRCS=test_mandelbrot.c

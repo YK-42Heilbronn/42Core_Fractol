@@ -6,73 +6,73 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:13:10 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/22 16:07:42 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:23:08 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-// when close widget is pressed on titlebar, any cleans up must be done through following hook
-void my_closehook(void *mlx)
+/*
+when close widget is pressed on titlebar:
+	- any cleans up must be done through following hook
+*/
+void	close_program(void *mlx)
 {
+	// mlx_delete_image
 	mlx_close_window(mlx);
 	exit(0);
 }
 
 // resizing window simultaneously image
-void my_resizehook(int32_t width, int32_t height, void *param)
+void	resize_view(int32_t width, int32_t height, void *frctl)
 {
-	if (mlx_resize_image(((t_set_params*)param)->img, width, height))
-		mandelbrot(param);
+	if (mlx_resize_image(((t_fractol *)frctl)->img, width, height))
+		display_set((t_fractol *)frctl);
 }
 
-
-// close program if ESC key is pressed
-void my_keyhook(mlx_key_data_t keydata, void *param)
+static void	arrow_keys(mlx_key_data_t *keydata, void *frctl)
 {
-	uint32_t width;
-	uint32_t height;
-	double offset;  // magnitude
-	int forward;  // direction
-	int backward;  // direction
+	t_set_params	*s_params;
+	t_view_params	*v_params;
 
-	width = ((t_set_params*)param)->img->width;
-	height = ((t_set_params*)param)->img->height;
-	offset = 0.1;
-	forward = 1;
-	backward = -1;
+	s_params = &((t_fractol *)frctl)->s_params;
+	v_params = &((t_fractol *)frctl)->v_params;
+	if (keydata->key == MLX_KEY_LEFT && keydata->action == MLX_RELEASE)
+	{
+		s_params->image.offset_x.min = v_params->offset * v_params->forward;
+		s_params->image.offset_x.max = v_params->offset * v_params->forward;
+	}
+	else if (keydata->key == MLX_KEY_RIGHT && keydata->action == MLX_RELEASE)
+	{
+		s_params->image.offset_x.min = v_params->offset * v_params->backward;
+		s_params->image.offset_x.max = v_params->offset * v_params->backward;
+	}
+	else if (keydata->key == MLX_KEY_UP && keydata->action == MLX_RELEASE)
+	{
+		s_params->image.offset_y.min = v_params->offset * v_params->forward;
+		s_params->image.offset_y.max = v_params->offset * v_params->forward;
+	}
+	else if (keydata->key == MLX_KEY_DOWN && keydata->action == MLX_RELEASE)
+	{
+		s_params->image.offset_y.min = v_params->offset * v_params->backward;
+		s_params->image.offset_y.max = v_params->offset * v_params->backward;
+	}
+}
 
+/*
+following events are handled:
+	- CLOSE program if ESC key is pressed
+	- MOVE view if ARROW keys are pressed
+*/
+void	inputs_events(mlx_key_data_t keydata, void *frctl)
+{
+	t_set_params	*s_params;
+
+	s_params = &((t_fractol *)frctl)->s_params;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
-		mlx_close_window(((t_set_params*)param)->mlx);
-
-	// if (keydata.key == MLX_KEY_R && keydata.action == MLX_RELEASE)
-	// {
-	// 	((t_set_params*)param)->img_offset_x = 0.0;
-	// 	((t_set_params*)param)->img_offset_y = 0.0;
-	// 	mandelbrot(((t_set_params*)param)->img, width, height, param);
-	// }
-	reset_offset_values((t_set_params*)param);
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-	{
-		((t_set_params*)param)->img_offset_x[0] = offset*forward;
-		((t_set_params*)param)->img_offset_x[1] = offset*forward;
-	}
-	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
-	{
-		((t_set_params*)param)->img_offset_x[0] = offset*backward;
-		((t_set_params*)param)->img_offset_x[1] = offset*backward;
-	}
-	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_RELEASE)
-	{
-		((t_set_params*)param)->img_offset_y[0] = offset*forward;
-		((t_set_params*)param)->img_offset_y[1] = offset*forward;
-	}
-	else if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_RELEASE)
-	{
-		((t_set_params*)param)->img_offset_y[0] = offset*backward;
-		((t_set_params*)param)->img_offset_y[1] = offset*backward;
-	}
-	mandelbrot(param);
-
-	// if 
+		mlx_close_window(((t_fractol *)frctl)->mlx);
+	reset_x_and_y_offsets(&(s_params->image.offset_x),
+		&(s_params->image.offset_y));
+	arrow_keys(&keydata, frctl);
+	display_set(frctl);
 }

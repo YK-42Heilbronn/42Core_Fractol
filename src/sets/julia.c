@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:36:17 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/22 15:57:06 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:18:32 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void draw(t_fractol *frctl)
 				&(frctl->window.a_y), &(frctl->s_params.image.a_y));
 			point_escaped_iteration_in_complex_plane(frctl);
 			mlx_put_pixel(frctl->img, frctl->window.pt.x, frctl->window.pt.y, \
-				get_pixel_color(&(frctl->s_params)));
+				get_band_coloring(get_color_gradient(&(frctl->s_params))));
 			frctl->window.pt.y++;
 			reset_z(&(frctl->s_params.z));
 		}
@@ -50,17 +50,10 @@ static void draw(t_fractol *frctl)
 
 void julia(t_fractol *frctl)
 {
-	uint32_t color;
-	uint32_t white;
-
-	white = get_rgba(255, 0, 255, 221);
-	color = get_rgba(0, 0, 255, 221);
 	frctl->window.a_x.max = frctl->img->width;
 	frctl->window.a_y.max = frctl->img->height;
 	update_image_axes_range(&(frctl->s_params));
-	frctl->s_params.c.real = frctl->s_params.extras[0];
-	frctl->s_params.c.imaginary = frctl->s_params.extras[1];
+	// frctl->s_params.c.real = frctl->s_params.extras[0];
+	// frctl->s_params.c.imaginary = frctl->s_params.extras[1];
 	draw(frctl);
 }
-
-
