@@ -1,0 +1,56 @@
+# 42_Heilbronn - fractol Project
+
+*This project has been created as part of the 42 curriculum by ykonka*.
+
+## Description
+
+* The goal of this project is to implement the `fractol` program which display the fractol sets available out. In the project subject `Mandelbrot` & `Julia` sets are asked to render using MiniLibx library. However, a slight different version of MiniLibx `MLX42` is used for graphics rendering.
+
+* Implementation done in `C` program
+
+* Authorized Libraries
+
+	- `MLX42`, `math`
+
+* Authorized C functions:
+
+	- `open`, `close`, `read`, `write`,
+	- `malloc`, `free`, `perror`,
+	- `strerror`, `exit`
+
+
+## Instructions
+
+### Compilation
+
+To get started with this project, follow these steps:
+```bash
+$ make
+```
+```
+$ make
+```
+
+### Execution
+
+```bash
+[Mandelbrot]
+$ ./fractol 1
+[Julia]
+$ ./fractol 2 [real] [imaginary]
+```
+
+### Example
+
+Here’s an example of how to use the pipex function in Bash Shell:
+
+```bash
+# julia with params
+$ ./fractol 2 -0.5125 0.5213
+```
+
+## Resources
+
+- [`MLX42 official git repo`](https://github.com/codam-coding-college/MLX42/tree/master/docs): To know how to use MLX42 lib
+
+-  AI is used for researching about project topics like what is fractol? etc
