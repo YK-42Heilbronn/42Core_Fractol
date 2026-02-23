@@ -1,12 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   julia.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/21 13:36:17 by ykonka            #+#    #+#             */
+/*   Updated: 2026/02/23 16:59:12 by ykonka           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../fractol.h"
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 11:12:55 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 15:17:56 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/21 14:06:01 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +34,15 @@ static void	draw(t_fractol *frctl)
 		frctl->window.pt.y = 0;
 		while (frctl->window.pt.y < frctl->img->height)
 		{
-			frctl->s_params.c.real = transform_sys1_to_sys2(frctl->window.pt.x,
+			frctl->s_params.z.real = transform_sys1_to_sys2(frctl->window.pt.x,
 					&(frctl->window.a_x), &(frctl->s_params.image.a_x));
-			frctl->s_params.c.imaginary = transform_sys1_to_sys2(frctl->window.pt.y,
-					&(frctl->window.a_y), &(frctl->s_params.image.a_y));
+			frctl->s_params.z.imaginary = transform_sys1_to_sys2(
+					frctl->window.pt.y, &(frctl->window.a_y),
+					&(frctl->s_params.image.a_y)
+					);
 			point_escaped_iteration_in_complex_plane(frctl);
 			mlx_put_pixel(frctl->img, frctl->window.pt.x, frctl->window.pt.y,
-				get_band_coloring(get_color_gradient(&(frctl->s_params))));
+				get_continuous_coloring(&(frctl->s_params))); // get_color_gradient(
 			frctl->window.pt.y++;
 			reset_z(&(frctl->s_params.z));
 		}
@@ -34,7 +50,7 @@ static void	draw(t_fractol *frctl)
 	}
 }
 
-void	mandelbrot(t_fractol *frctl)
+void	julia(t_fractol *frctl)
 {
 	frctl->window.a_x.max = frctl->img->width;
 	frctl->window.a_y.max = frctl->img->height;

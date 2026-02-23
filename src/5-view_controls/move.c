@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:13:10 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 15:23:08 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:35:11 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ when close widget is pressed on titlebar:
 */
 void	close_program(void *mlx)
 {
-	// mlx_delete_image
 	mlx_close_window(mlx);
-	exit(0);
 }
 
 // resizing window simultaneously image

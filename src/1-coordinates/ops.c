@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:41:01 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 10:43:36 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:47:49 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ double	min_max_diff(t_axis *ax)
 }
 
 /*
-@Ref:: https://stackoverflow.com/questions/929103/convert-a-number-range-to-another-range-maintaining-ratio#:~:text=That's%20a%20simple%20linear%20conversion,627k169%20923%20945
+@Ref:: [https://stackoverflow.com/questions/929103/convert-a-number-range-to-
+another-range-maintaining-ratio#:~:text=That's%20a%20simple%20linear%20
+conversion,627k169%20923%20945]
 scaling-factor       =  value - x_old[min] / x_old[max]
 	- x_old[min]        :: old system factor abstraction
 translation          =  scaling-factor * x_new[max]

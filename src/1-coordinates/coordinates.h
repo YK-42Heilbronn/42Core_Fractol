@@ -6,7 +6,11 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 10:43:14 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 10:43:21 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:46:51 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef COORDINATES_H
+# define COORDINATES_H
+
+#endif

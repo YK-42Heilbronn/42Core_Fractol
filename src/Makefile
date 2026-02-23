@@ -19,8 +19,8 @@ SRC_HEADER=fractol.h
 SRCS=1-coordinates/coordinates.c 1-coordinates/ops.c \
 	2-complex_number/complex.c \
 	3-colors/color.c \
-	view_controls/data.c view_controls/move.c view_controls/zoom.c\
-	sets/mandelbrot.c sets/julia.c sets/routines.c \
+	4-sets/mandelbrot.c 4-sets/julia.c 4-sets/routines.c \
+	5-view_controls/data.c 5-view_controls/move.c 5-view_controls/zoom.c\
 	utils/strtodouble.c \
 	fractol.c
 # TEST_SRCS=test_mandelbrot.c
