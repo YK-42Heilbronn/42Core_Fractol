@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 07:37:15 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/24 13:59:06 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 15:49:56 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	validate_argvs(int argc, char *argv[], t_fractol *frctl)
 		print_usage();
 	else
 	{
-		if (argv[1][0] == '1' && argc == 2)
+		if (argv[1][0] == '1' && ft_strlen(argv[1]) == 1 && argc == 2)
 			frctl->s_params.set = "1-Mandelbrot";
-		else if (argv[1][0] == '2' && (argc == 2 || argc == 4))
+		else if (argv[1][0] == '2' && ft_strlen(argv[1]) == 1 && (argc == 2 || argc == 4))
 		{
 			frctl->s_params.set = "2-Julia";
 			if (argc == 4)
