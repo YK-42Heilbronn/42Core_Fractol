@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 09:37:30 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 18:29:59 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 08:14:12 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ int	get_color_gradient(t_set_params *set_params)
 	return (value);
 }
 
-// Yellow= get_rgba(grad, grad, (grad*255)%255, 221)
-// Green= get_rgba((grad*2)%255, grad, (grad*8)%255, 221)
-// Red= get_rgba(grad, (grad*255)%255, (grad*255)%255, 221)
-// Purple= get_rgba(grad, (grad*255)%255, grad, 221)
-// Blue= get_rgba((grad*255)%255, (grad*255)%255, grad, 221)
 // White= get_rgba(grad, grad, grad, 221)
 uint32_t	get_simple_coloring(int grad)
 {
@@ -44,9 +39,7 @@ uint32_t	get_band_coloring(int grad)
 /*
 color = log(mod_cmplx_num(&(s_params->z)) / pow(2,
 				get_color_gradient(s_params)));
-{\displaystyle
-	mu=k+1-{\frac {\log {\log {|z_{k}|}}}{\log {n}}}
-}
+Wikipedia:Julia Set
 */
 uint32_t	get_continuous_coloring(t_set_params *s_params)
 {

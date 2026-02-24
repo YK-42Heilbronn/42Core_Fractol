@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:27:11 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 15:53:53 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 08:16:15 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_complex
 }					t_complex;
 
 // ================
-// Coordinate System & Their Elements
+// Coordinate System
 // ================
 typedef struct s_axis
 {

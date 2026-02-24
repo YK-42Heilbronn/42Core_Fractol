@@ -6,22 +6,17 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:13:10 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 15:35:11 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 08:15:14 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-/*
-when close widget is pressed on titlebar:
-	- any cleans up must be done through following hook
-*/
 void	close_program(void *mlx)
 {
 	mlx_close_window(mlx);
 }
 
-// resizing window simultaneously image
 void	resize_view(int32_t width, int32_t height, void *frctl)
 {
 	if (mlx_resize_image(((t_fractol *)frctl)->img, width, height))

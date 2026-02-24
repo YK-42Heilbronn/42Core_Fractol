@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 12:44:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/23 16:44:46 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 08:14:36 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	point_escaped_iteration_in_complex_plane(t_fractol *frctl)
 }
 
 // z(n+1) = z(n)**2 + c
-// initialize z(n) = 0+i*0 => 0
 void	update_z(t_set_params *set_params)
 {
 	squr_cmplx_num(&(set_params->z));
