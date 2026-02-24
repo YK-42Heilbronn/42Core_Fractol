@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:27:11 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/24 08:16:15 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 10:33:10 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,20 @@ typedef struct s_set_params
 }					t_set_params;
 
 /*
-offset   ->  magnitude
+offset   ->  magnitude (in pixels)
 forward  ->  direction
 backward ->  direction
+scale	 ->  scale is different both axes when the x and y ranges are different
+in the case of the same ranges of x and y the scale_x=scale_y
+however in the fractol the x and y ranges are different, so keep x as reference and scale y
+- if 2 pixel offset is zoomed, then what is 2pixels in pattern coordinates?
+- and x and y have different scales, then?
 */
 typedef struct s_view_params
 {
 	double			offset;
+	double			scale_x;
+	double			scale_y;
 	int				forward;
 	int				backward;
 	int				zoom;
@@ -97,7 +104,6 @@ typedef struct s_fractol
 // ===============
 // fractol.c
 void				initialize_fractol(t_fractol *fractol);
-void				display_set(t_fractol *frctl);
 
 // colors
 int					get_rgba(int r, int g, int b, int a);
@@ -112,7 +118,6 @@ void				squr_cmplx_num(t_complex *num);
 
 // view_controls
 // data.c
-void				update_image_axes_range(t_set_params *set_params);
 void				cursor_data(double xpos, double ypos, void *frctl);
 
 // move.c
@@ -131,6 +136,8 @@ void				mandelbrot(t_fractol *frctl);
 void				julia(t_fractol *frctl);
 
 // routines.c
+void				display_set(t_fractol *frctl);
+void				update_image_axes_range(t_set_params *set_params);
 void				point_escaped_iteration_in_complex_plane(t_fractol *frctl);
 void				reset_z(t_complex *z);
 void				update_z(t_set_params *set_params);

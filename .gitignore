@@ -10,3 +10,6 @@ git.sh
 *.sh
 src/*.sh
 src/*.o
+/*.log
+/*.supp
+/fractol

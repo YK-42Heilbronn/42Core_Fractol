@@ -6,11 +6,33 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 12:44:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/24 08:14:36 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 10:26:48 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
+
+void	display_set(t_fractol *frctl)
+{
+	if (frctl->s_params.set[0] == '1')
+		mandelbrot(frctl);
+	else if (frctl->s_params.set[0] == '2')
+		julia(frctl);
+	else
+		mandelbrot(frctl);
+}
+
+void	update_image_axes_range(t_set_params *set_params)
+{
+	set_params->image.a_x.min = set_params->image.a_x.min
+		+ set_params->image.offset_x.min;
+	set_params->image.a_x.max = set_params->image.a_x.max
+		+ set_params->image.offset_x.max;
+	set_params->image.a_y.min = set_params->image.a_y.min
+		+ set_params->image.offset_y.min;
+	set_params->image.a_y.max = set_params->image.a_y.max
+		+ set_params->image.offset_y.max;
+}
 
 void	point_escaped_iteration_in_complex_plane(t_fractol *frctl)
 {
