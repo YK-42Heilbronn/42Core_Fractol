@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:27:11 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/24 10:33:10 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 14:11:37 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ forward  ->  direction
 backward ->  direction
 scale	 ->  scale is different both axes when the x and y ranges are different
 in the case of the same ranges of x and y the scale_x=scale_y
-however in the fractol the x and y ranges are different, so keep x as reference and scale y
-- if 2 pixel offset is zoomed, then what is 2pixels in pattern coordinates?
-- and x and y have different scales, then?
+-> however in the fractol the x and y ranges are different,
+so keep x as reference and scale y
+	- and x and y have different scales, then?
 */
 typedef struct s_view_params
 {
