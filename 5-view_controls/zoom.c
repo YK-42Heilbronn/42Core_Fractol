@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:12:57 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/24 14:15:22 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/02/24 14:20:51 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	zoom_view(double xdelta, double ydelta, void *frctl)
 	t_set_params	*s_p;
 	t_view_params	*v_p;
 
-	s_p = &((t_fractol *)frctl)->s_p;
-	v_p = &((t_fractol *)frctl)->v_p;
+	s_p = &((t_fractol *)frctl)->s_params;
+	v_p = &((t_fractol *)frctl)->v_params;
 	v_p->scale_x = min_max_diff(&(s_p->image.a_x));
 	v_p->scale_y = min_max_diff(&(s_p->image.a_y));
 	if (ydelta > 0 && xdelta == 0)
