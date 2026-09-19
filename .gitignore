@@ -4,6 +4,7 @@ excludes/*
 tests/*
 config.sh
 git.sh
+libs/MLX42
 
 *.out
 *.a
