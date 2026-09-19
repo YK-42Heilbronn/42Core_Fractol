@@ -37,6 +37,13 @@ $ ./fractol 1
 $ ./fractol 2 [real] [imaginary]
 ```
 
+### Visuals
+#### Mandelbrot:
+![](.resources/Mandelbrot.png)
+
+#### Julia:
+![](.resources/Julia.png)
+
 ### Example
 
 Here’s an example of how to use the pipex function in Bash Shell:
